@@ -1,7 +1,5 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
-import Header from '../components/Header';
 
 const Home: NextPage = () => {
   return (
@@ -9,8 +7,7 @@ const Home: NextPage = () => {
       <Head>
         <title>Reddit 2.0</title>
       </Head>
-
-      <Header />
+      <h1>Hello</h1>
     </div>
   );
 };

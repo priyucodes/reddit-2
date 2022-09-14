@@ -14,17 +14,20 @@ import {
 } from 'heroicons-react';
 // import { StarIcon } from '@heroicons/react/outline';
 import { signIn, useSession, signOut } from 'next-auth/react';
+import Link from 'next/link';
 const Header = () => {
   const { data: session } = useSession();
   return (
-    <header className="sticky top-0 z-50 flex bg-white px-4 py-2 shadow-sm">
+    <header className="sticky top-0 z-50 flex bg-white px-4 py-2 shadow-sm items-center">
       <div className="relative h-16 w-32 flex-shrink-0 cursor-pointer">
-        <Image
-          src="https://logos-world.net/wp-content/uploads/2020/10/Reddit-Logo.png"
-          alt="Reddit"
-          layout="fill"
-          objectFit="contain"
-        />
+        <Link href="/">
+          <Image
+            src="https://logos-world.net/wp-content/uploads/2020/10/Reddit-Logo.png"
+            alt="Reddit"
+            layout="fill"
+            objectFit="contain"
+          />
+        </Link>
       </div>
       <div className="flex items-center mx-7 xl:min-w-[300px]">
         <Home className="h-5 w-5" />

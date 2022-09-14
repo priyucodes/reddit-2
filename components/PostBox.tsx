@@ -4,7 +4,7 @@ import Avatar from './Avatar';
 import { LinkOutline, PhotographOutline } from 'heroicons-react';
 import { toast } from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { ADD_POST, ADD_SUBREDDIT } from '../graphql/mutation';
 import client from '../apollo-client';
 import { GET_SUBREDDIT_BY_TOPIC } from '../graphql/queries';
@@ -40,6 +40,7 @@ const PostBox = () => {
           topic: formData.subreddit,
         },
       });
+      console.log(getSubredditListByTopic);
       const subredditExist = getSubredditListByTopic.length > 0;
       if (!subredditExist) {
         // create new

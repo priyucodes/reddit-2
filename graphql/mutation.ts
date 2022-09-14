@@ -1,11 +1,11 @@
 import { gql } from '@apollo/client';
 export const ADD_POST = gql`
   mutation MyMutation(
-    $body: string!
-    $image: string!
-    $subreddit_id: string!
-    $title: string!
-    $username: string!
+    $body: String!
+    $image: String!
+    $subreddit_id: ID!
+    $title: String!
+    $username: String!
   ) {
     insertPost(
       body: $body

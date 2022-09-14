@@ -8,8 +8,10 @@ type Props = {
 
 const Feed = ({ topic }: Props) => {
   const { data, error } = !topic
-    ? useQuery(GET_ALL_POSTS)
-    : useQuery(GET_ALL_POST_BY_TOPIC, {
+    ? // eslint-disable-next-line react-hooks/rules-of-hooks
+      useQuery(GET_ALL_POSTS)
+    : // eslint-disable-next-line react-hooks/rules-of-hooks
+      useQuery(GET_ALL_POST_BY_TOPIC, {
         variables: {
           topic: topic,
         },

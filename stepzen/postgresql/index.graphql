@@ -13,19 +13,28 @@ type Comment {
 
 type Post {
   body: String
-  commentList: [Comment] @materializer(query: "getCommentUsingPost_id")
+  comments: [Comment]
+    @materializer(
+      query: "getCommentUsingPostId"
+      arguments: [{ name: "post_id", field: "id" }]
+    )
   created_at: DateTime
   id: ID!
   image: String
   subreddit: Subreddit
     @materializer(
-      query: "getSubreddit"
+      query: "getSubredditListById"
+      # name of the field u wanna replace and field is the value we swap the value with.
       arguments: [{ name: "id", field: "subreddit_id" }]
     )
   subreddit_id: ID
   title: String
   username: String
-  voteList: [Vote] @materializer(query: "getVoteUsingPost_id")
+  votes: [Vote]
+    @materializer(
+      query: "getVoteUsingPostId"
+      arguments: [{ name: "post_id", field: "id" }]
+    )
 }
 
 type Subreddit {
@@ -59,6 +68,14 @@ type Query {
       table: "comment"
       configuration: "postgresql_config"
     )
+  getSubredditListById(id: ID!): Subreddit
+    @dbquery(
+      type: "postgresql"
+      query: """
+      select * from "subreddit" where "id" = $1
+      """
+      configuration: "postgresql_config"
+    )
   getComment(id: ID!): Comment
     @dbquery(
       type: "postgresql"
@@ -70,7 +87,12 @@ type Query {
     @dbquery(
       type: "postgresql"
       schema: "public"
-      table: "post"
+      # table: "post"
+      query: """
+      select * from "post"
+      order by "post"."created_at" desc
+      """
+      # join "subreddit" on "subreddit"."id" (Instead of joining we used materializer by stepzen )
       configuration: "postgresql_config"
     )
   getPost(id: ID!): Post
@@ -80,23 +102,20 @@ type Query {
       table: "post"
       configuration: "postgresql_config"
     )
-  getCommentUsingPost_id(id: ID!): [Comment]
+  getCommentUsingPostId(post_id: ID!): [Comment]
     @dbquery(
       type: "postgresql"
       query: """
-      SELECT T."created_at", T."id", T."post_id", T."text", T."username"
-        FROM "public"."comment" T
-        WHERE T."post_id" = $1
+      select * from "comment" where "post_id" = $1
       """
       configuration: "postgresql_config"
     )
-  getVoteUsingPost_id(id: ID!): [Vote]
+  getVoteUsingPostId(post_id: ID!): [Vote]
     @dbquery(
       type: "postgresql"
       query: """
-      SELECT T."created_at", T."id", T."post_id", T."upvote", T."username"
-        FROM "public"."vote" T
-        WHERE T."post_id" = $1
+      select * from "vote" where "post_id" = $1
+      order by "created_at" desc
       """
       configuration: "postgresql_config"
     )

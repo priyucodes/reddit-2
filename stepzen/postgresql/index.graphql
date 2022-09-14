@@ -131,6 +131,7 @@ type Query {
       type: "postgresql"
       query: """
       select * from "comment" where "post_id" = $1
+      order by "created_at" desc
       """
       configuration: "postgresql_config"
     )
@@ -260,12 +261,7 @@ type Mutation {
       dml: DELETE
       configuration: "postgresql_config"
     )
-  insertVote(
-    post_id: ID!
-    created_at: DateTime!
-    upvote: Boolean!
-    username: String!
-  ): Vote
+  insertVote(post_id: ID!, upvote: Boolean!, username: String!): Vote
     @dbquery(
       type: "postgresql"
       schema: "public"

@@ -22,16 +22,6 @@ export const ADD_POST = gql`
     }
   }
 `;
-export const ADD_SUBREDDIT = gql`
-  mutation MyMutation($topic: String!) {
-    insertSubreddit(topic: $topic) {
-      id
-      topic
-      created_at
-    }
-  }
-`;
-
 export const ADD_COMMENT = gql`
   mutation MyMutation($post_id: ID!, $username: String!, $text: String!) {
     insertComment(post_id: $post_id, username: $username, text: $text) {
@@ -40,6 +30,29 @@ export const ADD_COMMENT = gql`
       post_id
       username
       text
+    }
+  }
+`;
+
+// Had some weird bug but fixed
+export const ADD_VOTE = gql`
+  mutation MyMutation($post_id: ID!, $upvote: Boolean!, $username: String!) {
+    insertVote(post_id: $post_id, upvote: $upvote, username: $username) {
+      id
+      created_at
+      post_id
+      username
+      upvote
+    }
+  }
+`;
+
+export const ADD_SUBREDDIT = gql`
+  mutation MyMutation($topic: String!) {
+    insertSubreddit(topic: $topic) {
+      id
+      topic
+      created_at
     }
   }
 `;

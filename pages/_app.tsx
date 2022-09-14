@@ -5,7 +5,16 @@ import Header from '../components/Header';
 import { ApolloProvider } from '@apollo/client';
 import client from '../apollo-client';
 import { Toaster } from 'react-hot-toast';
-function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+import { Session } from 'next-auth';
+import { NextComponentType } from 'next';
+export interface CustomAppProps extends AppProps {
+  Component: NextComponentType;
+  pageProps: { session?: Session };
+}
+function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}: CustomAppProps) {
   return (
     <ApolloProvider client={client}>
       <SessionProvider session={session}>

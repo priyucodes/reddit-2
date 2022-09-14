@@ -9,7 +9,15 @@ export const GET_SUBREDDIT_BY_TOPIC = gql`
     }
   }
 `;
-
+export const GET_SUBREDDIT_WITH_LIMIT = gql`
+  query MyQuery($limit: Int!) {
+    getSubredditListLimit(limit: $limit) {
+      created_at
+      id
+      topic
+    }
+  }
+`;
 export const GET_ALL_POSTS = gql`
   query MyQuery {
     getPostList {
